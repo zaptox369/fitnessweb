@@ -1,1489 +1,703 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE GLOBAL FITNESS — Forge Your Limit</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-  /* --- ORIGINAL CSS INTEGRATION & FIXES --- */
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --black: #050505;
-    --off-black: #0d0d0d;
-    --charcoal: #151515;
-    --iron: #252525;
-    --smoke: #3a3a3a;
-    --ash: #7a7a7a;
-    --cream: #e8e8e8;
-    --white: #ffffff;
-    --fire: #ff4500;
-    --fire-dim: #cc3700;
-    --steel: #ffffff;
-    --metal: #ffffff;
-    --silver: #a0a0a0;
-    --copper: #d97706;
-    --gold: #c9a84c;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background:
-      linear-gradient(rgba(5,5,5,0.92), rgba(5,5,5,0.92)),
-      url('https://images.unsplash.com/photo-1517836357463-d25ddfcbf042?w=1600&q=80') no-repeat center/cover fixed;
-    background-color: var(--black);
-    color: var(--cream);
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  .cursor {
-    width: 12px; height: 12px;
-    background: var(--fire);
-    border-radius: 50%;
-    position: fixed;
-    top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s ease;
-    mix-blend-mode: difference;
-  }
-
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 4rem;
-    background: linear-gradient(to bottom, rgba(5,5,5,0.98), transparent);
-    border-bottom: 2px solid var(--steel);
-    box-shadow: 0 4px 8px rgba(255,255,255,0.12);
-  }
-
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 0.15em;
-    color: var(--white);
-    font-weight: 700;
-    text-transform: uppercase;
-    border-left: 3px solid var(--steel);
-    padding-left: 0.8rem;
-  }
-  .logo span { color: var(--copper); }
-
-  nav ul {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-    align-items: center;
-  }
-
-  nav ul a {
-    text-decoration: none;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ash);
-    transition: color 0.2s;
-  }
-  nav ul a:hover { color: var(--cream); }
-
-  .nav-cta {
-    background: var(--fire) !important;
-    color: var(--white) !important;
-    padding: 0.6rem 1.4rem !important;
-    letter-spacing: 0.15em !important;
-    transition: all 0.2s !important;
-    border: 2px solid var(--fire) !important;
-    font-weight: 700;
-  }
-  .nav-cta:hover { background: transparent !important; color: var(--fire) !important; border-color: var(--fire) !important; }
-
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 0 4rem;
-    padding-top: 6rem;
-    position: relative;
-    overflow: hidden;
-    border-right: 1px solid var(--steel);
-    background: linear-gradient(135deg, rgba(5,5,5,0.85) 0%, rgba(5,5,5,0.7) 50%), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80') no-repeat center/cover;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,69,0,0.02) 2px, rgba(255,69,0,0.02) 4px);
-    pointer-events: none;
-  }
-
-  .hero-tag {
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--steel);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-weight: 700;
-  }
-  .hero-tag::before {
-    content: '';
-    width: 3px; height: 20px;
-    background: var(--steel);
-    display: inline-block;
-    margin-right: 0.5rem;
-  }
-
-  .hero h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4rem, 8vw, 9rem);
-    line-height: 0.92;
-    letter-spacing: 0.08em;
-    color: var(--white);
-    margin-bottom: 2rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    border-left: 4px solid var(--copper);
-    padding-left: 1.5rem;
-  }
-
-  .hero h1 em {
-    font-style: normal;
-    color: var(--copper);
-    display: block;
-  }
-
-  .hero-desc {
-    font-size: 1rem;
-    font-weight: 300;
-    line-height: 1.8;
-    color: var(--ash);
-    max-width: 380px;
-    margin-bottom: 3rem;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .btn-primary {
-    background: var(--fire);
-    color: var(--white);
-    border: 3px solid var(--fire);
-    padding: 1rem 2.5rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: none;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s;
-    box-shadow: inset 0 0 0 1px rgba(255,69,0,0.5);
-  }
-  .btn-primary:hover { background: transparent; color: var(--fire); transform: translateY(-2px); box-shadow: inset 0 0 0 3px var(--fire); }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--cream);
-    border: 2px solid var(--steel);
-    padding: 1rem 2.5rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: none;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s;
-  }
-  .btn-ghost:hover { border-color: var(--cream); background: rgba(255,255,255,0.06); transform: translateY(-2px); }
-
-  .hero-visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: 80vh;
-  }
-
-  .hero-circle {
-    width: 420px; height: 420px;
-    border-radius: 0;
-    border: 2px solid var(--steel);
-    position: absolute;
-    animation: rotateSlow 30s linear infinite;
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  }
-  .hero-circle::before {
-    content: '';
-    position: absolute;
-    top: -8px; left: 50%;
-    width: 12px; height: 12px;
-    background: var(--copper);
-    transform: translateX(-50%);
-  }
-
-  .hero-circle-2 {
-    width: 300px; height: 300px;
-    animation-direction: reverse;
-    animation-duration: 20s;
-    border-color: var(--metal);
-  }
-
-  @keyframes rotateSlow { to { transform: rotate(360deg); } }
-
-  .hero-stat-block {
-    background: var(--charcoal);
-    border: 3px solid var(--steel);
-    padding: 1.5rem;
-    z-index: 2;
-    text-align: center;
-    box-shadow: -4px 4px 0px var(--copper);
-  }
-
-  .hero-stat-block .num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.5rem;
-    color: var(--copper);
-    line-height: 1;
-    font-weight: 900;
-  }
-
-  .hero-stat-block .label {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--silver);
-    margin-top: 0.4rem;
-    font-weight: 700;
-  }
-
-  .stats-float { position: absolute; display: flex; flex-direction: column; gap: 1rem; }
-  .stats-float.right { right: 0; }
-  .stats-float.left { left: 0; }
-
-  .marquee-wrap {
-    overflow: hidden;
-    background: var(--charcoal);
-    padding: 1rem 0;
-    white-space: nowrap;
-    border-top: 4px solid var(--copper);
-    border-bottom: 4px solid var(--copper);
-    box-shadow: inset 0 0 20px rgba(255,69,0,0.1);
-  }
-
-  .marquee-track { display: inline-block; animation: scroll 18s linear infinite; }
-  .marquee-track span {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
-    letter-spacing: 0.15em;
-    color: var(--copper);
-    margin: 0 2.5rem;
-    opacity: 1;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-  .section { padding: 3.5rem 4rem; }
-
-  .section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--fire);
-    margin-bottom: 0.6rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--iron); }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.5rem, 5vw, 5rem);
-    letter-spacing: 0.05em;
-    line-height: 1;
-    color: var(--white);
-    margin-bottom: 2rem;
-  }
-
-  .programs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--iron); }
-
-  .program-card {
-    background-color: var(--off-black);
-    padding: 3rem 2.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
-    border: 2px solid var(--steel);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  .program-card .program-bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 0;
-    opacity: 1;
-    transform: translateZ(0);
-    border: 2px solid magenta;
-  }
-  .program-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(13,13,13,0.35) 0%, rgba(21,21,21,0.25) 100%);
-    z-index: 1;
-  }
-
-  .program-card::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 4px;
-    background: var(--copper);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-
-  /* Inline program backgrounds (external CSS not linked) */
-  .program-card.bg-01 { background-image: url('https://images.unsplash.com/photo-1517836357463-d25ddfcbf042?w=1200&q=80'); }
-  .program-card.bg-02 { background-image: url('https://images.unsplash.com/photo-1552672260-cc23eeca6a50?w=1200&q=80'); }
-  .program-card.bg-05 { background-image: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80'); }
-
-  /* Lighter overlays for image cards so photos are visible */
-  .program-card.bg-01::after,
-  .program-card.bg-02::after,
-  .program-card.bg-05::after {
-    background: linear-gradient(135deg, rgba(5,5,5,0.5) 0%, rgba(5,5,5,0.4) 100%);
-  }
-  
-  .program-card:hover { background: var(--charcoal); border-color: var(--copper); box-shadow: inset -2px 2px 0px var(--copper); }
-  .program-card:hover::before { transform: scaleX(1); }
-
-  .program-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 4rem;
-    color: var(--steel);
-    line-height: 1;
-    margin-bottom: 1.5rem;
-    transition: color 0.3s;
-    font-weight: 900;
-    position: relative;
-    z-index: 2;
-  }
-  .program-card:hover .program-num { color: var(--copper); }
-
-  .program-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
-    letter-spacing: 0.1em;
-    color: var(--white);
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    position: relative;
-    z-index: 2;
-  }
-
-  .program-desc { font-size: 0.85rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.6); margin-bottom: 2rem; position: relative; z-index: 2; }
-  .program-meta { display: flex; gap: 1.5rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); position: relative; z-index: 2; font-weight: 500; margin-top: 1.5rem; }
-
-  .stats-bar {
-    background: var(--charcoal);
-    border-top: 4px solid var(--steel);
-    border-bottom: 4px solid var(--steel);
-    padding: 3rem 4rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    text-align: center;
-    box-shadow: inset 0 0 20px rgba(255,255,255,0.06);
-  }
-
-  .stat-item .big { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: var(--white); line-height: 1; font-weight: 900; text-transform: uppercase; }
-  .stat-item .big span { color: var(--copper); }
-  .stat-item .small { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); margin-top: 0.5rem; }
-
-  .trainers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-  
-  /* FIXED TYPO: Properly ended trainer-card styles */
-  .trainer-card {
-    position: relative;
-    overflow: hidden;
-    background: var(--charcoal);
-    border: 3px solid var(--steel);
-    box-shadow: -4px 4px 0px var(--iron);
-  }
-
-  .trainer-avatar { height: 280px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-  .avatar-bg { width: 100%; height: 100%; position: absolute; inset: 0; }
-  .trainer-initials { font-family: 'Bebas Neue', sans-serif; font-size: 6rem; color: rgba(255,255,255,0.08); position: absolute; z-index: 1; }
-  .trainer-info { padding: 1.5rem; border-top: 1px solid var(--iron); }
-  .trainer-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.1em; color: var(--white); text-transform: uppercase; font-weight: 700; }
-  .trainer-role { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper); margin-top: 0.25rem; font-weight: 700; }
-  .trainer-spec { font-size: 0.8rem; color: var(--ash); margin-top: 0.75rem; font-weight: 300; }
-
-  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--iron); }
-  .pricing-card { background: var(--off-black); padding: 3rem 2.5rem; border: 2px solid var(--steel); transition: all 0.3s; }
-  .pricing-card:hover { border-color: var(--copper); box-shadow: inset -2px 2px 0px var(--copper); }
-  .pricing-card.featured { background: var(--copper); border: 2px solid var(--fire); box-shadow: -4px 4px 0px var(--fire); }
-
-  .plan-name { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ash); margin-bottom: 1rem; }
-  .featured .plan-name { color: rgba(255,255,255,0.7); }
-  .plan-price { font-family: 'Bebas Neue', sans-serif; font-size: 4.5rem; color: var(--white); line-height: 1; margin-bottom: 0.5rem; font-weight: 900; }
-  .plan-period { font-size: 0.75rem; color: var(--ash); margin-bottom: 2rem; font-weight: 300; }
-  .featured .plan-period { color: rgba(255,255,255,0.6); }
-
-  .plan-features { list-style: none; margin-bottom: 2.5rem; }
-  .plan-features li { font-size: 0.85rem; font-weight: 300; color: var(--ash); padding: 0.6rem 0; border-bottom: 1px solid var(--iron); display: flex; align-items: center; gap: 0.75rem; }
-  .featured .plan-features li { color: rgba(255,255,255,0.8); border-bottom-color: rgba(255,255,255,0.15); }
-  .plan-features li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--fire); flex-shrink: 0; }
-  .featured .plan-features li::before { background: var(--white); }
-
-  .quote-section { padding: 8rem 4rem; text-align: center; position: relative; overflow: hidden; }
-  .quote-section::before { content: '"'; font-family: 'Bebas Neue', sans-serif; font-size: 25rem; color: var(--charcoal); position: absolute; top: -4rem; left: 50%; transform: translateX(-50%); line-height: 1; pointer-events: none; }
-  .quote-text { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.05em; color: var(--white); max-width: 800px; margin: 0 auto 2rem; position: relative; z-index: 2; }
-  .quote-attr { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); position: relative; z-index: 2; }
-
-  footer { background: var(--off-black); border-top: 4px solid var(--steel); padding: 4rem 4rem 2rem; box-shadow: inset 0 4px 10px rgba(255,255,255,0.06); }
-  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
-  .footer-brand .logo { font-size: 2rem; margin-bottom: 1rem; display: block; }
-  .footer-tagline { font-size: 0.85rem; font-weight: 300; line-height: 1.8; color: var(--ash); max-width: 280px; }
-  .footer-col h4 { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream); margin-bottom: 1.5rem; }
-  .footer-col ul { list-style: none; }
-  .footer-col ul li { margin-bottom: 0.75rem; }
-  .footer-col ul a { font-size: 0.85rem; font-weight: 300; color: var(--ash); text-decoration: none; transition: color 0.2s; }
-  .footer-col ul a:hover { color: var(--cream); }
-  .footer-bottom { border-top: 1px solid var(--iron); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--smoke); }
-
-  /* BMI CALCULATOR & GYMS STYLES ENHANCEMENTS */
-  .bmi-section { padding: 7rem 4rem; background: #130800; border-top: 3px solid var(--fire); border-bottom: 3px solid var(--fire); position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(232, 65, 24, 0.3); animation: highlightPulse 2s ease-in-out infinite alternate; }
-  @keyframes highlightPulse { from { box-shadow: 0 0 50px rgba(232, 65, 24, 0.3); } to { box-shadow: 0 0 80px rgba(232, 65, 24, 0.5); } }
-  .bmi-section::before { content: 'BMI'; font-family: 'Bebas Neue', sans-serif; font-size: 22rem; color: rgba(232,65,24,0.05); position: absolute; right: -2rem; top: 50%; transform: translateY(-50%); pointer-events: none; line-height: 1; letter-spacing: -0.05em; }
-  .bmi-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-  .bmi-unit-toggle { display: flex; width: fit-content; border: 1px solid var(--iron); margin-bottom: 2.5rem; }
-  .bmi-unit-toggle button { background: transparent; border: none; color: var(--ash); font-family: 'DM Sans', sans-serif; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.6rem 1.5rem; cursor: none; transition: background 0.2s, color 0.2s; }
-  .bmi-unit-toggle button.active { background: var(--fire); color: var(--white); }
-  .bmi-fields { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2rem; }
-  .bmi-field label { display: block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); margin-bottom: 0.5rem; }
-  .bmi-field input { width: 100%; background: var(--charcoal); border: 1px solid var(--iron); color: var(--cream); font-family: 'Bebas Neue', sans-serif; font-size: 2rem; padding: 0.8rem 1.2rem; outline: none; transition: border-color 0.2s; letter-spacing: 0.05em; }
-  .bmi-field input::placeholder { color: var(--smoke); }
-  .bmi-field input:focus { border-color: var(--fire); }
-  .bmi-field .unit-label { font-size: 0.72rem; color: var(--smoke); margin-top: 0.4rem; letter-spacing: 0.1em; }
-  .bmi-calc-btn { width: 100%; background: var(--fire); color: var(--white); border: none; padding: 1.1rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.2em; cursor: none; transition: background 0.2s, transform 0.15s; margin-top: 0.5rem; }
-  .bmi-calc-btn:hover { background: var(--fire-dim); transform: translateY(-2px); }
-  .bmi-right { position: sticky; top: 120px; }
-  .bmi-result-box { background: var(--charcoal); border: 1px solid var(--iron); padding: 3rem; text-align: center; min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: border-color 0.4s; }
-  .bmi-result-box.show { border-color: var(--fire); }
-  .bmi-placeholder { font-size: 0.8rem; color: var(--smoke); letter-spacing: 0.1em; text-transform: uppercase; }
-  .bmi-number { font-family: 'Bebas Neue', sans-serif; font-size: 7rem; line-height: 1; color: var(--white); margin-bottom: 0.25rem; transition: color 0.4s; }
-  .bmi-category { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
-  .bmi-advice { font-size: 0.82rem; font-weight: 300; color: var(--ash); line-height: 1.7; max-width: 280px; }
-  .bmi-scale { width: 100%; margin-top: 2rem; }
-  .bmi-scale-bar { height: 6px; border-radius: 3px; background: linear-gradient(to right, #4fc3f7, #81c784, #ffb74d, #e84118, #b71c1c); position: relative; margin-bottom: 0.6rem; }
-  .bmi-scale-needle { position: absolute; top: -5px; width: 2px; height: 16px; background: var(--white); transform: translateX(-50%); transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); border-radius: 1px; left: 0%; }
-  .bmi-scale-labels { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--smoke); letter-spacing: 0.08em; text-transform: uppercase; }
-  .bmi-table { margin-top: 2rem; width: 100%; border-collapse: collapse; }
-  .bmi-table tr { border-bottom: 1px solid var(--iron); }
-  .bmi-table td { padding: 0.6rem 0; font-size: 0.78rem; color: var(--ash); }
-  .bmi-table td:last-child { text-align: right; font-weight: 500; color: var(--cream); }
-  .bmi-table tr.active-row td { color: var(--fire) !important; }
-
-  .gyms-section { padding: 7rem 4rem; background: var(--black); }
-  .gyms-section .section-desc { font-size: 1rem; font-weight: 300; line-height: 1.6; color: var(--ash); max-width: 600px; margin-bottom: 3rem; }
-  .gyms-filter-bar { display: flex; gap: 0.75rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
-  .filter-btn { background: transparent; border: 1px solid var(--iron); color: var(--ash); font-family: 'DM Sans', sans-serif; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.55rem 1.2rem; cursor: none; transition: all 0.2s; }
-  .filter-btn:hover { border-color: var(--ash); color: var(--cream); }
-  .filter-btn.active { background: var(--fire); border-color: var(--fire); color: var(--white); }
-  .gyms-locate-btn { display: flex; align-items: center; gap: 0.6rem; background: var(--charcoal); border: 1px solid var(--iron); color: var(--cream); font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.75rem 1.5rem; cursor: none; margin-bottom: 2.5rem; transition: border-color 0.2s, background 0.2s; width: fit-content; }
-  .gyms-locate-btn:hover { border-color: var(--fire); background: var(--iron); }
-  .pin-icon { width: 14px; height: 14px; background: var(--fire); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); flex-shrink: 0; }
-  .gyms-status { font-size: 0.78rem; color: var(--ash); margin-bottom: 2rem; letter-spacing: 0.05em; min-height: 1.2em; }
-  .gyms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--iron); }
-  .gym-card { background: var(--off-black); padding: 2rem; position: relative; transition: background 0.25s; display: none; }
-  .gym-card.visible { display: block; }
-  .gym-card:hover { background: var(--charcoal); }
-  .gym-card-type { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--fire); margin-bottom: 0.75rem; }
-  .gym-card-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.06em; color: var(--white); margin-bottom: 0.5rem; line-height: 1.2; }
-  .gym-card-addr { font-size: 0.78rem; font-weight: 300; color: var(--ash); margin-bottom: 1rem; line-height: 1.5; }
-  .gym-card-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.7rem; color: var(--smoke); text-transform: uppercase; letter-spacing: 0.1em; }
-  .gym-rating { color: var(--gold); font-weight: 500; }
-  .gym-dist { margin-left: auto; font-size: 0.7rem; color: var(--fire); font-weight: 500; }
-  .gyms-empty { grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--smoke); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; }
-  .gyms-map-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--fire); text-decoration: none; margin-top: 1rem; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
-  .gyms-map-link:hover { border-color: var(--fire); }
-
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-  .fade-up { opacity: 0; animation: fadeUp 0.8s ease forwards; }
-  .delay-1 { animation-delay: 0.1s; }
-  .delay-2 { animation-delay: 0.25s; }
-  .delay-3 { animation-delay: 0.4s; }
-  .delay-4 { animation-delay: 0.55s; }
-
-  /* --- BRAND NEW COMPONENT: AUTHENTICATION MODAL --- */
-  .auth-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(5, 5, 5, 0.95);
-    z-index: 1000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    backdrop-filter: blur(8px);
-  }
-  .auth-overlay.active { display: flex; }
-  .auth-card {
-    background: var(--off-black);
-    border: 3px solid var(--steel);
-    width: 100%;
-    max-width: 450px;
-    padding: 3rem 2.5rem;
-    position: relative;
-    box-shadow: -8px 8px 0px var(--copper);
-  }
-  .auth-close {
-    position: absolute;
-    top: 1.5rem; right: 1.5rem;
-    background: transparent;
-    border: none;
-    color: var(--ash);
-    font-size: 1.5rem;
-    cursor: none;
-    transition: color 0.2s;
-  }
-  .auth-close:hover { color: var(--fire); }
-  .auth-tabs { display: flex; gap: 1.5rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--iron); }
-  .auth-tab {
-    background: transparent; border: none;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem; color: var(--ash);
-    padding-bottom: 0.5rem; cursor: none;
-    letter-spacing: 0.05em; transition: all 0.2s;
-    position: relative;
-  }
-  .auth-tab.active { color: var(--white); }
-  .auth-tab.active::after {
-    content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 3px; background: var(--fire);
-  }
-  .auth-form { display: none; flex-direction: column; gap: 1.2rem; }
-  .auth-form.active { display: flex; }
-  .input-group { display: flex; flex-direction: column; gap: 0.4rem; }
-  .input-group label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--silver); font-weight: 700; }
-  .input-group input {
-    background: var(--charcoal); border: 1px solid var(--iron);
-    padding: 0.8rem 1rem; color: var(--cream); font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem; outline: none; transition: border-color 0.2s;
-  }
-  .input-group input:focus { border-color: var(--steel); }
-  
-  /* Social Buttons Layout Blocks */
-  .social-auth-title {
-    text-align: center; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--ash); margin: 1.5rem 0 1rem; position: relative;
-  }
-  .social-auth-title::before, .social-auth-title::after {
-    content: ''; position: absolute; top: 50%; width: 25%; height: 1px; background: var(--iron);
-  }
-  .social-auth-title::before { left: 0; } .social-auth-title::after { right: 0; }
-  
-  .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-  .btn-social {
-    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-    background: var(--charcoal); border: 1px solid var(--iron); padding: 0.7rem;
-    color: var(--cream); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
-    text-transform: uppercase; cursor: none; transition: all 0.2s;
-  }
-  .btn-social:hover { border-color: var(--silver); background: var(--iron); }
-  .btn-social.google:hover { border-color: #4285F4; }
-  .btn-social.facebook:hover { border-color: #1877F2; }
-
-  /* Forgot Password Styles */
-  .forgot-password-link { text-align: right; margin-top: 0.5rem; }
-  .btn-forgot {
-    background: none; border: none; color: var(--copper); font-size: 0.75rem;
-    letter-spacing: 0.15em; text-transform: uppercase; cursor: none;
-    transition: color 0.2s; font-weight: 600;
-  }
-  .btn-forgot:hover { color: var(--fire); }
-  
-  .forgot-password-header { margin-bottom: 1.5rem; }
-  .btn-back {
-    background: none; border: none; color: var(--ash); font-size: 0.8rem;
-    letter-spacing: 0.1em; text-transform: uppercase; cursor: none;
-    transition: color 0.2s; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;
-  }
-  .btn-back:hover { color: var(--cream); }
-  
-  .forgot-password-help {
-    font-size: 0.8rem; color: var(--ash); font-weight: 300; line-height: 1.6;
-    margin-top: 1rem; text-align: center;
-  }
-
-  /* --- TESTIMONIALS SECTION --- */
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-  .testimonial-card {
-    background: var(--charcoal);
-    border: 2px solid var(--steel);
-    padding: 2.5rem;
-    text-align: center;
-    transition: all 0.3s;
-    box-shadow: -4px 4px 0px var(--copper);
-  }
-  .testimonial-card:hover {
-    border-color: var(--copper);
-    transform: translateY(-5px);
-  }
-  .testimonial-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin: 0 auto 1.5rem;
-    border: 3px solid var(--steel);
-    object-fit: cover;
-  }
-  .testimonial-stars {
-    color: var(--copper);
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    letter-spacing: 0.2em;
-  }
-  .testimonial-text {
-    font-size: 0.9rem;
-    font-style: italic;
-    color: var(--ash);
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-  }
-  .testimonial-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    color: var(--white);
-    margin-bottom: 0.25rem;
-    font-weight: 700;
-  }
-  .testimonial-role {
-    font-size: 0.75rem;
-    color: var(--copper);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  /* --- TRANSFORMATION GALLERY --- */
-  .transformation-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.2rem;
-  }
-  .transformation-item {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 1;
-    border: 3px solid var(--steel);
-    box-shadow: -4px 4px 0px var(--copper);
-    background: #1a1a1a;
-  }
-  .transformation-before,
-  .transformation-after {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    opacity: 1;
-  }
-  .transformation-before { left: 0; z-index: 2; }
-  .transformation-after { left: 100%; transition: left 0.4s ease; z-index: 3; }
-  .transformation-item:hover .transformation-after { left: 0; }
-  .transformation-label {
-    position: absolute;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--fire);
-    color: var(--white);
-    padding: 0.6rem 1.5rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    z-index: 10;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-  }
-
-  /* --- BRAND NEW COMPONENT: AI CHATBOT SYSTEM --- */
-  .bot-trigger {
-    position: fixed; bottom: 2rem; right: 2rem;
-    background: var(--fire); color: var(--white);
-    width: 60px; height: 60px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 999; cursor: none; border: 2px solid var(--white);
-    box-shadow: -4px 4px 0px var(--copper); transition: transform 0.2s;
-  }
-  .bot-trigger:hover { transform: translateY(-3px); }
-  .bot-trigger svg { width: 24px; height: 24px; fill: currentColor; }
-
-  .bot-window {
-    position: fixed; bottom: 6.5rem; right: 2rem;
-    width: 380px; height: 500px; background: var(--off-black);
-    border: 3px solid var(--steel); z-index: 999;
-    display: none; flex-direction: column;
-    box-shadow: -6px 6px 0px var(--copper);
-  }
-  .bot-window.active { display: flex; }
-  .bot-header {
-    background: var(--charcoal); padding: 1.2rem 1.5rem;
-    border-bottom: 1px solid var(--iron); display: flex;
-    justify-content: space-between; align-items: center;
-  }
-  .bot-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.08em; color: var(--white); }
-  .bot-title span { color: var(--fire); }
-  .bot-close { background: transparent; border: none; color: var(--ash); font-size: 1.1rem; cursor: none; }
-  .bot-close:hover { color: var(--white); }
-  
-  .bot-messages { flex: 1; padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
-  .msg-bubble { max-width: 80%; padding: 0.8rem 1rem; font-size: 0.85rem; line-height: 1.5; }
-  .msg-bubble.bot { background: var(--charcoal); color: var(--cream); align-self: flex-start; border-left: 2px solid var(--steel); }
-  .msg-bubble.user { background: var(--fire); color: var(--white); align-self: flex-end; font-weight: 500; }
-  
-  .bot-input-area { padding: 1rem; border-top: 1px solid var(--iron); display: flex; gap: 0.5rem; background: var(--black); }
-  .bot-input-area input {
-    flex: 1; background: var(--charcoal); border: 1px solid var(--iron);
-    padding: 0.8rem; color: var(--cream); font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem; outline: none;
-  }
-  .bot-input-area input:focus { border-color: var(--fire); }
-  .bot-send-btn { background: var(--fire); color: var(--white); border: none; padding: 0 1.2rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; cursor: none; transition: background 0.2s; }
-  .bot-send-btn:hover { background: var(--fire-dim); }
-
-  /* Responsive viewports adjustments */
-  @media (max-width: 900px) {
-    nav { padding: 1.2rem 2rem; }
-    nav ul { display: none; }
-    .hero { grid-template-columns: 1fr; padding: 2rem; padding-top: 8rem; }
-    .hero-visual { display: none; }
-    .programs-grid, .trainers-grid, .pricing-grid, .testimonials-grid { grid-template-columns: 1fr; }
-    .stats-bar { grid-template-columns: repeat(2, 1fr); }
-    .section { padding: 5rem 2rem; }
-    .footer-top { grid-template-columns: 1fr 1fr; }
-    .bmi-inner { grid-template-columns: 1fr; gap: 3rem; }
-    .bmi-section { padding: 5rem 2rem; }
-    .bmi-right { position: static; }
-    .bot-window { width: calc(100vw - 4rem); right: 2rem; bottom: 6.5rem; }
-  }
-</style>
-</head>
-<body>
-
-<div class="cursor" id="cursor"></div>
-
-<nav>
-  <div class="logo">THE GLOBAL <span>FITNESS</span></div>
-  <ul>
-    <li><a href="#programs">Programs</a></li>
-    <li><a href="#trainers">Trainers</a></li>
-    <li><a href="#bmi">BMI Calculator</a></li>
-    <li><a href="#gyms">Find Gyms</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#" class="nav-cta" onclick="openAuthModal(event, 'login')">Login / Join</a></li>
-  </ul>
-</nav>
-
-<section class="hero">
-  <div class="hero-text">
-    <div class="hero-tag fade-up">Est. 2019 · Forge Your Limit</div>
-    <h1 class="fade-up delay-1">
-      Build
-      <em>Legends</em>
-      Here.
-    </h1>
-    <p class="hero-desc fade-up delay-2">
-      Elite training. Zero compromise. Whether you're chasing strength, speed, or total transformation — this is where it begins.
-    </p>
-    <div class="hero-actions fade-up delay-3">
-      <a href="#programs" class="btn-primary">Start Training</a>
-      <a href="#pricing" class="btn-ghost">View Plans</a>
-    </div>
-  </div> 
-
-  <div class="hero-visual fade-up delay-4">
-    <div class="hero-circle"></div>
-    <div class="hero-circle hero-circle-2"></div>
-
-    <div class="stats-float right">
-      <div class="hero-stat-block">
-        <div class="num">98%</div>
-        <div class="label">Goal Rate</div>
-      </div>
-      <div class="hero-stat-block">
-        <div class="num">24/7</div>
-        <div class="label">Access</div>
-      </div>
-    </div>
-
-    <div class="stats-float left">
-      <div class="hero-stat-block">
-        <div class="num">50+</div>
-        <div class="label">Classes</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span>STRENGTH TRAINING</span> <span>◆</span> <span>HIIT CARDIO</span> <span>◆</span> <span>POWERLIFTING</span> <span>◆</span> <span>YOGA & RECOVERY</span> <span>◆</span> <span>NUTRITION COACHING</span> <span>◆</span> <span>PERSONAL TRAINING</span> <span>◆</span>
-    <span>STRENGTH TRAINING</span> <span>s◆</span> <span>HIIT CARDIO</span> <span>◆</span> <span>POWERLIFTING</span> <span>◆</span> <span>YOGA & RECOVERY</span> <span>◆</span> <span>NUTRITION COACHING</span> <span>◆</span> <span>PERSONAL TRAINING</span> <span>◆</span>
-  </div>
-</div>
-
-<section class="section" id="programs">
-  <div class="section-label">What We Offer</div>
-  <h2 class="section-title">Our Programs</h2>
-  <div class="programs-grid">
-    <div class="program-card bg-01" style="background-image: url('https://sfhealthtech.com/cdn/shop/articles/11950_1_1000x.jpg?v=1721216102');">
-      <div class="program-bg" style="background-image: url('https://sfhealthtech.com/cdn/shop/articles/11950_1_1000x.jpg?v=1721216102);">
-        
-      </div>
-      <div class="program-num">01</div>
-      <div class="program-name">Strength & Power</div>
-      <p class="program-desc">Progressive overload training built around compound lifts. Designed for anyone who wants to get seriously strong.</p>
-      <div class="program-meta"><span>⏱ 60 min</span> <span>🔥 All Levels</span></div>
-    </div>
-    <div class="program-card bg-02" style="background-image: url('https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg');">
-   
-      <div class="program-num">02</div>
-      
-      <div class="program-name">HIIT & Cardio</div>
-      <p class="program-desc">High-intensity interval sessions that torch calories and boost endurance. Maximum output, minimum time.</p>
-      <div class="program-meta"><span>⏱ 45 min</span> <span>🔥 Intermediate</span></div>
-    </div>
-    <div class="program-card" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80');">
-      <div class="program-num">03</div>
-      <div class="program-name">Body Sculpt</div>
-      <p class="program-desc">Targeted toning and muscle definition through carefully designed resistance circuits and isolation work.</p>
-      <div class="program-meta"><span>⏱ 50 min</span> <span>🔥 Beginner</span></div>
-    </div>
-    <div class="program-card" style="background-image: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80');">
-      <div class="program-num">04</div>
-      <div class="program-name">Yoga & Mobility</div>
-      <p class="program-desc">Recovery, flexibility, and mindfulness. The often-overlooked side of elite performance and longevity.</p>
-      <div class="program-meta"><span>⏱ 60 min</span> <span>🔥 All Levels</span></div>
-    </div>
-    <div class="program-card bg-05" style="background-image: url('https://sfhealthtech.com/cdn/shop/articles/11950_1_1000x.jpg?v=1721216102');">
-      <div class="program-bg" style="background-image: url('https://sfhealthtech.com/cdn/shop/articles/11950_1_1000x.jpg?v=1721216102');"></div>
-      <div class="program-num">05</div>
-      <div class="program-name">Olympic Lifting</div>
-      <p class="program-desc">Master the snatch, the clean & jerk, and the mechanics of explosive power under expert guidance.</p>
-      <div class="program-meta"><span>⏱ 75 min</span> <span>🔥 Advanced</span></div>
-    </div>
-    <div class="program-card" style="background-image: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80');">
-      <div class="program-num">06</div>
-      <div class="program-name">Nutrition Coaching</div>
-      <p class="program-desc">Personalized meal plans, macro tracking, and 1:1 coaching to fuel your performance and transformation.</p>
-      <div class="program-meta"><span>⏱ Ongoing</span> <span>🔥 All Levels</span></div>
-    </div>
-  </div>
-</section>
-
-<div class="stats-bar">
-  <div class="stat-item"><div class="big">12<span>K+</span></div><div class="small">Members Trained</div></div>
-  <div class="stat-item"><div class="big">8<span>+</span></div><div class="small">Years Running</div></div>
-  <div class="stat-item"><div class="big">30<span>+</span></div><div class="small">Elite Trainers</div></div>
-  <div class="stat-item"><div class="big">98<span>%</span></div><div class="small">Satisfaction Rate</div></div>
-</div>
-
-<section class="section" id="trainers">
-  <div class="section-label">The Team</div>
-  <h2 class="section-title">Meet Your Coaches</h2>
-  <div class="trainers-grid">
-    <div class="trainer-card">
-      <div class="trainer-avatar" style="background: #1c1210; background-image: url('https://static.vecteezy.com/system/resources/thumbnails/046/836/942/small/young-bangladeshi-male-fitness-trainer-in-modern-gym-environment-suitable-for-health-and-wellness-promotions-exercise-tutorials-and-gym-advertisements-photo.jpg'); background-size: cover; background-position: center;">
-        <div class="trainer-initials">MR</div>
-      </div>
-      <div class="trainer-info">
-        <div class="trainer-name">Marcus Rivera</div>
-        <div class="trainer-role">Strength & Conditioning</div>
-        <p class="trainer-spec">Former competitive powerlifter. 10+ years in elite athletic training and coaching.</p>
-      </div>
-    </div>
-    <div class="trainer-card">
-      <div class="trainer-avatar" style="background: #0f1a14; background-image: url('https://t3.ftcdn.net/jpg/05/62/09/28/360_F_562092860_mWJBNRqTg4rarfoJaSdkaLlfy1dkrP33.jpg'); background-size: cover; background-position: center;">
-        <div class="trainer-initials">SK</div>
-      </div>
-      <div class="trainer-info">
-        <div class="trainer-name">Sara Kim</div>
-        <div class="trainer-role">HIIT & Functional Training</div>
-        <p class="trainer-spec">Certified HIIT instructor and sports nutritionist. Specialist in metabolic conditioning.</p>
-      </div>
-    </div>
-    <div class="trainer-card">
-      <div class="trainer-avatar" style="background: #141018; background-image: url('https://ifsinstitute.com/wp-content/uploads/2024/03/scope-for-fitness-trainer.jpg'); background-size: cover; background-position: center;">
-        <div class="trainer-initials">JT</div>
-      </div>
-      <div class="trainer-info">
-        <div class="trainer-name">James Thorn</div>
-        <div class="trainer-role">Olympic Lifting Coach</div>
-        <p class="trainer-spec">National-level weightlifter and certified USA Weightlifting coach with 12 years experience.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="transformations">
-  <div class="section-label">Client Transformations</div>
-  <h2 class="section-title">Real Results, Real People</h2>
-  <p style="font-size: 1rem; color: var(--ash); max-width: 600px; margin: 0 auto 4rem; text-align: center;">Hover over images to see the transformation. These are real members who achieved their goals through our programs.</p>
-  <div class="transformation-grid">
-    <div class="transformation-item">
-      <img class="transformation-before" src="https://i0.wp.com/thecutgym.com/wp-content/uploads/2024/06/male-body-transformation-london.webp?fit=1000%2C700&ssl=1" alt="Before">
-      <img class="transformation-after" src="https://i0.wp.com/thecutgym.com/wp-content/uploads/2024/06/male-body-transformation-london.webp?fit=1000%2C700&ssl=1">
-      <div class="transformation-label">-15kg • 12 weeks</div>
-    </div>
-    <div class="transformation-item">
-      <img class="transformation-before" src="https://i0.wp.com/thecutgym.com/wp-content/uploads/2024/11/male-body-transformation-london-3.webp?fit=750%2C525&ssl=1" alt="Before">
-      <img class="transformation-after" src="https://i0.wp.com/thecutgym.com/wp-content/uploads/2024/11/male-body-transformation-london-3.webp?fit=750%2C525&ssl=1" alt="After">
-      <div class="transformation-label">Complete makeover</div>
-    </div>
-  </div>
-</section>
-
-<section class="bmi-section" id="bmi">
-  <div class="section-label">Know Your Numbers</div>
-  <h2 class="section-title">BMI Calculator</h2>
-  <div class="bmi-inner">
-    <div class="bmi-left">
-      <div class="bmi-unit-toggle">
-        <button class="active" id="btn-metric" onclick="setUnit('metric')">Metric</button>
-        <button id="btn-imperial" onclick="setUnit('imperial')">Imperial</button>
-      </div>
-      <div class="bmi-fields">
-        <div class="bmi-field">
-          <label>Height</label>
-          <input type="number" id="height-input" placeholder="175" min="1" />
-          <div class="unit-label" id="height-unit">centimetres (cm)</div>
-        </div>
-        <div class="bmi-field">
-          <label>Weight</label>
-          <input type="number" id="weight-input" placeholder="70" min="1" />
-          <div class="unit-label" id="weight-unit">kilograms (kg)</div>
-        </div>
-      </div>
-      <button class="bmi-calc-btn" onclick="calculateBMI()">Calculate BMI</button>
-      <table class="bmi-table" style="margin-top:2.5rem;">
-        <tr id="row-under"><td>Underweight</td><td>&lt; 18.5</td></tr>
-        <tr id="row-normal"><td>Normal weight</td><td>18.5 – 24.9</td></tr>
-        <tr id="row-over"><td>Overweight</td><td>25 – 29.9</td></tr>
-        <tr id="row-obese"><td>Obese</td><td>≥ 30</td></tr>
-      </table>
-    </div>
-    <div class="bmi-right">
-      <div class="bmi-result-box" id="bmi-result-box">
-        <div class="bmi-placeholder" id="bmi-placeholder">Enter your details and hit calculate</div>
-        <div id="bmi-output" style="display:none; width:100%;">
-          <div class="bmi-number" id="bmi-number">--</div>
-          <div class="bmi-category" id="bmi-category">--</div>
-          <p class="bmi-advice" id="bmi-advice"></p>
-          <div class="bmi-scale">
-            <div class="bmi-scale-bar"><div class="bmi-scale-needle" id="bmi-needle"></div></div>
-            <div class="bmi-scale-labels"><span>Under</span> <span>Normal</span> <span>Over</span> <span>Obese</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="gyms-section" id="gyms">
-  <div class="section-label">Find Your Activity</div>
-  <h2 class="section-title">Nearby Gyms & Fitness Locations</h2>
-  <p class="section-desc">Discover gyms, yoga studios, parks, swimming pools, running tracks, and cycling paths near you. Get active in your local area!</p>
-  <button class="gyms-locate-btn" id="locate-btn" onclick="locateUser()">
-    <div class="pin-icon"></div><span id="locate-text">Use My Location</span>
-  </button>
-  <div class="gyms-filter-bar" id="gyms-filter" style="display:none;">
-    <button class="filter-btn active" onclick="filterGyms('all', this)">All</button>
-    <button class="filter-btn" onclick="filterGyms('gym', this)">Gyms</button>
-    <button class="filter-btn" onclick="filterGyms('yoga', this)">Yoga</button>
-    <button class="filter-btn" onclick="filterGyms('park', this)">Parks</button>
-    <button class="filter-btn" onclick="filterGyms('pool', this)">Swimming</button>
-    <button class="filter-btn" onclick="filterGyms('sport', this)">Sports</button>
-    <button class="filter-btn" onclick="filterGyms('running', this)">Running Tracks</button>
-    <button class="filter-btn" onclick="filterGyms('cycling', this)">Cycling Paths</button>
-  </div>
-  <div class="gyms-status" id="gyms-status"></div>
-  <div class="gyms-grid" id="gyms-grid">
-    <div class="gyms-empty" id="gyms-empty" style="display:none;">No locations found nearby.</div>
-  </div>
-</section>
-
-<section class="section" id="pricing">
-  <div class="section-label">Investment</div>
-  <h2 class="section-title">Choose Your Plan</h2>
-  <div class="pricing-grid">
-    <div class="pricing-card">
-      <div class="plan-name">Starter</div>
-      <div class="plan-price">₹1,499</div>
-      <div class="plan-period">per month</div>
-      <ul class="plan-features">
-        <li>Gym floor access</li>
-        <li>5 group classes / month</li>
-        <li>Locker room access</li>
-        <li>Basic fitness assessment</li>
-      </ul>
-      <a href="#" class="btn-ghost" style="width:100%; text-align:center; display:block;">Get Started</a>
-    </div>
-    <div class="pricing-card featured">
-      <div class="plan-name">Elite</div>
-      <div class="plan-price">₹3,299</div>
-      <div class="plan-period">per month — most popular</div>
-      <ul class="plan-features">
-        <li>Unlimited gym access</li>
-        <li>Unlimited group classes</li>
-        <li>2 PT sessions / month</li>
-        <li>Nutrition consultation</li>
-        <li>Priority booking</li>
-        <li>Guest passes x2</li>
-      </ul>
-      <a href="#" class="btn-primary" style="width:100%; text-align:center; display:block; background:#111; color:#fff;">Join Elite</a>
-    </div>
-    <div class="pricing-card">
-      <div class="plan-name">Legend</div>
-      <div class="plan-price">₹5,999</div>
-      <div class="plan-period">per month</div>
-      <ul class="plan-features">
-        <li>All Elite features</li>
-        <li>Unlimited PT sessions</li>
-        <li>Custom meal plan</li>
-        <li>Recovery & spa access</li>
-        <li>VIP lounge access</li>
-        <li>Quarterly body comp scan</li>
-      </ul>
-      <a href="#" class="btn-ghost" style="width:100%; text-align:center; display:block;">Go Legend</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <span class="logo">THE GLOBAL <span>FITNESS</span></span>
-      <p class="footer-tagline">We don't just build bodies. We build discipline, resilience, and champions. Come find your edge.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Programs</h4>
-      <ul>
-        <li><a href="#">Strength & Power</a></li>
-        <li><a href="#">HIIT Cardio</a></li>
-        <li><a href="#">Body Sculpt</a></li>
-        <li><a href="#">Yoga & Mobility</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Our Trainers</a></li>
-        <li><a href="#">Careers</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Visit Us</h4>
-      <ul>
-        <li><a href="#">MI Road, Jaipur</a></li>
-        <li><a href="#">Mon–Fri 5am–11pm</a></li>
-        <li><a href="#">+91 98765 43210</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 The Global Fitness. All rights reserved.</span>
-    <span>Privacy · Terms</span>
-  </div>
-</footer>
-
-<div class="auth-overlay" id="authOverlay" onclick="closeAuthModal(event)">
-  <div class="auth-card" onclick="event.stopPropagation()">
-    <button class="auth-close" onclick="toggleAuthModal()">×</button>
-    <div class="auth-tabs">
-      <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Login</button>
-      <button class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Sign Up</button>
-    </div>
-    
-    <form class="auth-form active" id="form-login" onsubmit="handleAuthSubmit(event)">
-      <div class="input-group">
-        <label>Email Address</label>
-        <input type="email" placeholder="you@example.com" required>
-      </div>
-      <div class="input-group">
-        <label>Password</label>
-        <input type="password" placeholder="••••••••" required>
-      </div>
-      <div class="forgot-password-link">
-        <button type="button" class="btn-forgot" onclick="switchAuthTab('forgot')">Forgot Password?</button>
-      </div>
-      <button type="submit" class="btn-primary" style="margin-top:1rem; cursor:none;">Log In</button>
-      
-      <div class="social-auth-title">Or Connect With</div>
-      <div class="social-grid">
-        <button type="button" class="btn-social google" onclick="alert('Google Auth Triggered')">Google</button>
-        <button type="button" class="btn-social facebook" onclick="alert('Facebook Auth Triggered')">Facebook</button>
-      </div>
-      <div class="input-group">
-        <label>Or Log In via Phone</label>
-        <input type="tel" placeholder="+91 XXXXX XXXXX">
-        <button type="button" class="btn-ghost" style="padding:0.5rem; font-size:0.7rem; margin-top:0.4rem; cursor:none;" onclick="alert('OTP Sent!')">Send OTP</button>
-      </div>
-    </form>
-
-    <form class="auth-form" id="form-signup" onsubmit="handleAuthSubmit(event)">
-      <div class="input-group">
-        <label>Full Name</label>
-        <input type="text" placeholder="John Doe" required>
-      </div>
-      <div class="input-group">
-        <label>Email Address</label>
-        <input type="email" placeholder="you@example.com" required>
-      </div>
-      <div class="input-group">
-        <label>Create Password</label>
-        <input type="password" placeholder="••••••••" required>
-      </div>
-      <button type="submit" class="btn-primary" style="margin-top:1rem; cursor:none;">Create Account</button>
-    </form>
-
-    <form class="auth-form" id="form-forgot" onsubmit="handleForgotPassword(event)">
-      <div class="forgot-password-header">
-        <button type="button" class="btn-back" onclick="switchAuthTab('login')">← Back to Login</button>
-      </div>
-      <div class="input-group">
-        <label>Email Address</label>
-        <input type="email" placeholder="you@example.com" required>
-      </div>
-      <p class="forgot-password-help">We'll send you a link to reset your password.</p>
-      <button type="submit" class="btn-primary" style="margin-top:1rem; cursor:none;">Send Reset Link</button>
-    </form>
-  </div>
-</div>
-
-<button class="bot-trigger" id="botTrigger" onclick="toggleBotWindow()">
-  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
-</button>
-
-<div class="bot-window" id="botWindow">
-  <div class="bot-header">
-    <div class="bot-title">LEGEND <span>AI</span></div>
-    <button class="bot-close" onclick="toggleBotWindow()">✕</button>
-  </div>
-  <div class="bot-messages" id="botMessages">
-    <div class="msg-bubble bot">Welcome, athlete. I am your automated performance assistant. Ask me about our training regimens or plans.</div>
-  </div>
-  <div class="bot-input-area">
-    <input type="text" id="botInput" placeholder="Ask about programs, pricing..." onkeydown="if(event.key === 'Enter') sendBotMessage()">
-    <button class="bot-send-btn" onclick="sendBotMessage()">GO</button>
-  </div>
-</div>
-
-<script>
-  // --- MOUSE CURSOR & INTERACTION SYSTEM ---
-  const cursor = document.getElementById('cursor');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX - 6 + 'px';
-    cursor.style.top = e.clientY - 6 + 'px';
-  });
-
-  function refreshCursorListeners() {
-    document.querySelectorAll('a, button, input, .auth-tab').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(2.5)');
-      el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
-    });
-  }
-  refreshCursorListeners();
-
-  // --- CARD ANIMATION INTERSECTION OBSERVER ---
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.program-card, .trainer-card, .pricing-card, .stat-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-  });
-
-  // --- INTERACTIVE AUTHENTICATION MODAL FUNCTIONS ---
-  function openAuthModal(e, tab) {
-    e.preventDefault();
-    document.getElementById('authOverlay').classList.add('active');
-    switchAuthTab(tab);
-  }
-  function toggleAuthModal() {
-    document.getElementById('authOverlay').classList.toggle('active');
-  }
-  function closeAuthModal(e) {
-    if(e.target.id === 'authOverlay') toggleAuthModal();
-  }
-  function switchAuthTab(type) {
-    document.getElementById('tab-login').classList.toggle('active', type === 'login');
-    document.getElementById('tab-signup').classList.toggle('active', type === 'signup');
-    document.getElementById('form-login').classList.toggle('active', type === 'login');
-    document.getElementById('form-signup').classList.toggle('active', type === 'signup');
-    document.getElementById('form-forgot').classList.toggle('active', type === 'forgot');
-  }
-  function handleAuthSubmit(e) {
-    e.preventDefault();
-    alert('Authentication action completed successfully!');
-    toggleAuthModal();
-  }
-  function handleForgotPassword(e) {
-    e.preventDefault();
-    const email = e.target.querySelector('input[type="email"]').value;
-    alert('Password reset link has been sent to ' + email + '!');
-    switchAuthTab('login');
-    e.target.reset();
-  }
-
-  // --- INTERACTIVE CHATBOT FUNCTIONS ---
-  function toggleBotWindow() {
-    const windowEl = document.getElementById('botWindow');
-    windowEl.style.display = (windowEl.style.display === 'flex') ? 'none' : 'flex';
-  }
-  function sendBotMessage() {
-    const input = document.getElementById('botInput');
-    const msgText = input.value.trim();
-    if(!msgText) return;
-
-    appendBubble(msgText, 'user');
-    input.value = '';
-
-    setTimeout(() => {
-      let response = "To build legendary status, consistency is key. Check our Our Programs for strength configurations or ask a live rep!";
-      const lower = msgText.toLowerCase();
-      if(lower.includes('price') || lower.includes('plan')) {
-        response = "Our subscription tiers start at ₹1,499/mo for Starter tiers up to our complete ₹5,999/mo Legend access configuration.";
-      } else if(lower.includes('program') || lower.includes('workout')) {
-        response = "We offer 6 key targeted pathways: Strength & Power, HIIT, Body Sculpt, Mobility, Olympic Lifting, and Guided Nutrition tracks.";
-      }
-      appendBubble(response, 'bot');
-    }, 750);
-  }
-  function appendBubble(text, side) {
-    const container = document.getElementById('botMessages');
-    const bubble = document.createElement('div');
-    bubble.className = `msg-bubble ${side}`;
-    bubble.textContent = text;
-    container.appendChild(bubble);
-    container.scrollTop = container.scrollHeight;
-  }
-
-  // --- LEGACY BMI ENGINE ---
-  let currentUnit = 'metric';
-  function setUnit(unit) {
-    currentUnit = unit;
-    document.getElementById('btn-metric').classList.toggle('active', unit === 'metric');
-    document.getElementById('btn-imperial').classList.toggle('active', unit === 'imperial');
-    if (unit === 'metric') {
-      document.getElementById('height-input').placeholder = '175';
-      document.getElementById('weight-input').placeholder = '70';
-      document.getElementById('height-unit').textContent = 'centimetres (cm)';
-      document.getElementById('weight-unit').textContent = 'kilograms (kg)';
-    } else {
-      document.getElementById('height-input').placeholder = '69';
-      document.getElementById('weight-input').placeholder = '154';
-      document.getElementById('height-unit').textContent = 'inches (in)';
-      document.getElementById('weight-unit').textContent = 'pounds (lbs)';
-    }
-    document.getElementById('height-input').value = '';
-    document.getElementById('weight-input').value = '';
-    resetResult();
-  }
-  function resetResult() {
-    document.getElementById('bmi-placeholder').style.display = 'block';
-    document.getElementById('bmi-output').style.display = 'none';
-    document.getElementById('bmi-result-box').classList.remove('show');
-    ['row-under','row-normal','row-over','row-obese'].forEach(id => { document.getElementById(id).classList.remove('active-row'); });
-  }
-  function calculateBMI() {
-    let h = parseFloat(document.getElementById('height-input').value);
-    let w = parseFloat(document.getElementById('weight-input').value);
-    if (!h || !w || h <= 0 || w <= 0) {
-      document.getElementById('height-input').style.borderColor = '#e84118';
-      document.getElementById('weight-input').style.borderColor = '#e84118';
-      setTimeout(() => { document.getElementById('height-input').style.borderColor = ''; document.getElementById('weight-input').style.borderColor = ''; }, 1000);
-      return;
-    }
-    let bmi = (currentUnit === 'metric') ? w / ((h / 100) * (h / 100)) : (703 * w) / (h * h);
-    bmi = Math.round(bmi * 10) / 10;
-    let category, color, advice, rowId, needlePct;
-    if (bmi < 18.5) {
-      category = 'Underweight'; color = '#4fc3f7'; rowId = 'row-under'; needlePct = Math.max(2, (bmi / 18.5) * 20);
-      advice = 'Your BMI suggests you may be underweight. Consider consulting a nutritionist to build a healthy diet plan and increase lean muscle mass.';
-    } else if (bmi < 25) {
-      category = 'Normal Weight'; color = '#81c784'; rowId = 'row-normal'; needlePct = 20 + ((bmi - 18.5) / 6.4) * 30;
-      advice = 'Great work — you\'re in the healthy range! Keep up your training routine and balanced nutrition to maintain this result.';
-    } else if (bmi < 30) {
-      category = 'Overweight'; color = '#ffb74d'; rowId = 'row-over'; needlePct = 50 + ((bmi - 25) / 5) * 25;
-      advice = 'You\'re slightly above the healthy range. Our trainers can help you build a focused program to reach your goal weight safely.';
-    } else {
-      category = 'Obese'; color = '#e84118'; rowId = 'row-obese'; needlePct = Math.min(98, 75 + ((bmi - 30) / 10) * 23);
-      advice = 'Your BMI is in the obese range. We recommend speaking with a healthcare professional and starting a guided fitness program with one of our coaches.';
-    }
-    document.getElementById('bmi-placeholder').style.display = 'none';
-    document.getElementById('bmi-output').style.display = 'block';
-    document.getElementById('bmi-result-box').classList.add('show');
-    document.getElementById('bmi-number').textContent = bmi.toFixed(1);
-    document.getElementById('bmi-number').style.color = color;
-    document.getElementById('bmi-category').textContent = category;
-    document.getElementById('bmi-category').style.color = color;
-    document.getElementById('bmi-advice').textContent = advice;
-    setTimeout(() => { document.getElementById('bmi-needle').style.left = needlePct + '%'; }, 100);
-    ['row-under','row-normal','row-over','row-obese'].forEach(id => { document.getElementById(id).classList.remove('active-row'); });
-    document.getElementById(rowId).classList.add('active-row');
-  }
-
-  // --- MAP ENGINE & OVERPASS GEOLOCATION ---
-  let userLat = null, userLng = null;
-  let allPlaces = [];
-  let currentFilter = 'all';
-  function locateUser() {
-    var btn = document.getElementById('locate-btn');
-    var txt = document.getElementById('locate-text');
-    var status = document.getElementById('gyms-status');
-    if (!navigator.geolocation) { status.textContent = 'Geolocation not supported by your browser.'; return; }
-    btn.classList.add('loading'); txt.textContent = 'Locating you...'; status.textContent = '';
-    navigator.geolocation.getCurrentPosition(
-      function(pos) {
-        userLat = pos.coords.latitude; userLng = pos.coords.longitude;
-        txt.textContent = 'Location found!'; status.textContent = 'Searching nearby fitness spots...';
-        document.getElementById('gyms-filter').style.display = 'flex';
-        fetchNearbyPlaces();
-      },
-      function(err) {
-        btn.classList.remove('loading'); txt.textContent = 'Use My Location';
-        status.textContent = 'Could not get your location. Try again.';
-      },
-      { timeout: 10000 }
-    );
-  }
-  function fetchNearbyPlaces() {
-    var radius = 3000;
-    var q = '[out:json][timeout:25];('
-      + 'node["leisure"="fitness_centre"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + 'node["sport"="yoga"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + 'node["leisure"="sports_centre"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + 'node["leisure"="swimming_pool"]["access"!="private"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + 'node["leisure"="park"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + 'node["sport"="running"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + 'node["highway"="cycleway"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + 'node["sport"="cycling"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + 'way["leisure"="fitness_centre"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + 'way["leisure"="sports_centre"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + 'way["leisure"="park"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + 'way["highway"="cycleway"](around:' + radius + ',' + userLat + ',' + userLng + ');'
-      + ');out center 30;';
-    fetch('https://overpass-api.de/api/interpreter', { method: 'POST', body: 'data=' + encodeURIComponent(q) })
-    .then(function(r) { return r.json(); })
-    .then(function(data) { processPlaces(data.elements); })
-    .catch(function() { document.getElementById('gyms-status').textContent = 'Could not load nearby places. Check your connection.'; });
-  }
-  function haversine(lat1, lon1, lat2, lon2) {
-    var R = 6371, dLat = (lat2-lat1)*Math.PI/180, dLon = (lon2-lon1)*Math.PI/180;
-    var a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  }
-  function getPlaceType(tags) {
-    if (!tags) return 'gym';
-    if (tags.leisure === 'fitness_centre') return 'gym';
-    if (tags.sport === 'yoga') return 'yoga';
-    if (tags.leisure === 'swimming_pool') return 'pool';
-    if (tags.leisure === 'park') return 'park';
-    if (tags.leisure === 'sports_centre') return 'sport';
-    if (tags.sport === 'running') return 'running';
-    if (tags.highway === 'cycleway' || tags.sport === 'cycling') return 'cycling';
-    return 'gym';
-  }
-  function getTypeLabel(t) { return {gym:'Gym',yoga:'Yoga Studio',pool:'Swimming Pool',park:'Park',sport:'Sports Centre',running:'Running Track',cycling:'Cycling Path'}[t] || 'Fitness'; }
-  function processPlaces(elements) {
-    allPlaces = elements
-      .filter(function(e) { return e.tags && e.tags.name; })
-      .map(function(e) {
-        var lat = e.lat || (e.center && e.center.lat);
-        var lon = e.lon || (e.center && e.center.lon);
-        return { name: e.tags.name, addr: e.tags['addr:street'] || '', lat: lat, lon: lon, dist: haversine(userLat, userLng, lat, lon), type: getPlaceType(e.tags), tags: e.tags };
-      })
-      .filter(function(p) { return p.lat && p.dist < 5; })
-      .sort(function(a, b) { return a.dist - b.dist; })
-      .slice(0, 18);
-    document.getElementById('gyms-status').textContent = allPlaces.length ? allPlaces.length + ' fitness locations found near you.' : 'No spots found within 5km.';
-    renderCards();
-  }
-  function filterGyms(type, btn) {
-    currentFilter = type;
-    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-    renderCards();
-  }
-  function renderCards() {
-    var grid = document.getElementById('gyms-grid');
-    grid.querySelectorAll('.gym-card').forEach(function(c) { c.remove(); });
-    var filtered = currentFilter === 'all' ? allPlaces : allPlaces.filter(function(p) { return p.type === currentFilter; });
-    var empty = document.getElementById('gyms-empty');
-    if (!filtered.length) { empty.style.display = 'block'; return; }
-    empty.style.display = 'none';
-    filtered.forEach(function(p, i) {
-      var dist = p.dist < 1 ? Math.round(p.dist*1000) + ' m' : p.dist.toFixed(1) + ' km';
-      var url = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(p.name + ' ' + p.addr);
-      var rating = (3.8 + Math.random()*1.1).toFixed(1);
-      var card = document.createElement('div');
-      card.className = 'gym-card visible';
-      card.style.opacity = '0'; card.style.transform = 'translateY(20px)';
-      card.style.transition = 'opacity 0.4s ease ' + (i*0.06) + 's, transform 0.4s ease ' + (i*0.06) + 's';
-      card.innerHTML = '<div class="gym-card-type">' + getTypeLabel(p.type) + '</div>'
-        + '<div class="gym-card-name">' + p.name + '</div>'
-        + '<div class="gym-card-addr">' + (p.addr || 'Nearby location') + '</div>'
-        + '<div class="gym-card-meta"><span class="gym-rating">★ ' + rating + '</span>'
-        + '<span>' + (p.tags.opening_hours || 'Hours vary') + '</span>'
-        + '<span class="gym-dist">' + dist + '</span></div>'
-        + '<a href="' + url + '" target="_blank" class="gyms-map-link">View on Maps →</a>';
-      grid.appendChild(card);
-      setTimeout(function() { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 60 + i*60);
-    });
-    refreshCursorListeners();
-  }
-</script>
-</body>
-</html>
+/* --- ORIGINAL CSS INTEGRATION & FIXES --- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #050505;
+  --off-black: #0d0d0d;
+  --charcoal: #151515;
+  --iron: #252525;
+  --smoke: #3a3a3a;
+  --ash: #7a7a7a;
+  --cream: #e8e8e8;
+  --white: #ffffff;
+  --fire: #ff4500;
+  --fire-dim: #cc3700;
+  --steel: #ffffff;
+  --metal: #ffffff;
+  --silver: #a0a0a0;
+  --copper: #d97706;
+  --gold: #c9a84c;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background:
+    linear-gradient(rgba(5,5,5,0.92), rgba(5,5,5,0.92)),
+    url('https://images.unsplash.com/photo-1517836357463-d25ddfcbf042?w=1600&q=80') no-repeat center/cover fixed;
+  background-color: var(--black);
+  color: var(--cream);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+.cursor {
+  width: 12px; height: 12px;
+  background: var(--fire);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+  mix-blend-mode: difference;
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 4rem;
+  background: linear-gradient(to bottom, rgba(5,5,5,0.98), transparent);
+  border-bottom: 2px solid var(--steel);
+  box-shadow: 0 4px 8px rgba(74,124,158,0.15);
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.15em;
+  color: var(--white);
+  font-weight: 700;
+  text-transform: uppercase;
+  border-left: 3px solid var(--steel);
+  padding-left: 0.8rem;
+}
+.logo span { color: var(--copper); }
+
+nav ul {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+nav ul a {
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ash);
+  transition: color 0.2s;
+}
+nav ul a:hover { color: var(--cream); }
+
+.nav-cta {
+  background: var(--fire) !important;
+  color: var(--white) !important;
+  padding: 0.6rem 1.4rem !important;
+  letter-spacing: 0.15em !important;
+  transition: all 0.2s !important;
+  border: 2px solid var(--fire) !important;
+  font-weight: 700;
+}
+.nav-cta:hover { background: transparent !important; color: var(--fire) !important; border-color: var(--fire) !important; }
+
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 0 4rem;
+  padding-top: 6rem;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid var(--steel);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(74,124,158,0.08) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,69,0,0.02) 2px, rgba(255,69,0,0.02) 4px);
+  pointer-events: none;
+}
+
+.hero-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 700;
+}
+.hero-tag::before {
+  content: '';
+  width: 3px; height: 20px;
+  background: var(--steel);
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 8vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  margin-bottom: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  border-left: 4px solid var(--copper);
+  padding-left: 1.5rem;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--copper);
+  display: block;
+}
+
+.hero-desc {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--ash);
+  max-width: 380px;
+  margin-bottom: 3rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn-primary {
+  background: var(--fire);
+  color: var(--white);
+  border: 3px solid var(--fire);
+  padding: 1rem 2.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: none;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+  box-shadow: inset 0 0 0 1px rgba(255,69,0,0.5);
+}
+.btn-primary:hover { background: transparent; color: var(--fire); transform: translateY(-2px); box-shadow: inset 0 0 0 3px var(--fire); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--cream);
+  border: 2px solid var(--steel);
+  padding: 1rem 2.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: none;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: var(--cream); background: rgba(74,124,158,0.1); transform: translateY(-2px); }
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 80vh;
+}
+
+.hero-circle {
+  width: 420px; height: 420px;
+  border-radius: 0;
+  border: 2px solid var(--steel);
+  position: absolute;
+  animation: rotateSlow 30s linear infinite;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+.hero-circle::before {
+  content: '';
+  position: absolute;
+  top: -8px; left: 50%;
+  width: 12px; height: 12px;
+  background: var(--copper);
+  transform: translateX(-50%);
+}
+
+.hero-circle-2 {
+  width: 300px; height: 300px;
+  animation-direction: reverse;
+  animation-duration: 20s;
+  border-color: var(--metal);
+}
+
+@keyframes rotateSlow {
+  to { transform: rotate(360deg); }
+}
+
+.hero-stat-block {
+  background: var(--charcoal);
+  border: 3px solid var(--steel);
+  padding: 1.5rem;
+  z-index: 2;
+  text-align: center;
+  box-shadow: -4px 4px 0px var(--copper);
+}
+
+.hero-stat-block .num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  color: var(--copper);
+  line-height: 1;
+  font-weight: 900;
+}
+
+.hero-stat-block .label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--silver);
+  margin-top: 0.4rem;
+  font-weight: 700;
+}
+
+.stats-float {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.stats-float.right { right: 0; }
+.stats-float.left { left: 0; }
+
+.marquee-wrap {
+  overflow: hidden;
+  background: var(--charcoal);
+  padding: 1rem 0;
+  white-space: nowrap;
+  border-top: 4px solid var(--copper);
+  border-bottom: 4px solid var(--copper);
+  box-shadow: inset 0 0 20px rgba(255,69,0,0.1);
+}
+
+.marquee-track {
+  display: inline-block;
+  animation: scroll 18s linear infinite;
+}
+
+.marquee-track span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+  color: var(--copper);
+  margin: 0 2.5rem;
+  opacity: 1;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.section { padding: 7rem 4rem; }
+
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--fire);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--iron);
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  color: var(--white);
+  margin-bottom: 4rem;
+}
+
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  background: var(--iron);
+}
+
+.program-card {
+  background-color: var(--off-black);
+  padding: 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  border: 2px solid var(--steel);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.program-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--copper);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+/* Specific program backgrounds */
+.program-card.bg-01 { background-image: url('https://www.muscleandstrength.com/articles/5-exercises-for-explosive-strength'); }
+.program-card.bg-02 { background-image: url('https://images.unsplash.com/photo-1552672260-cc23eeca6a50?w=1000&q=80'); }
+.program-card.bg-05 { background-image: url('https://images.unsplash.com/photo-1599487488073-3f4747c20149?w=1000&q=80'); }
+
+/* Slightly lighter overlay for cards with images so details show through */
+.program-card.bg-01::after,
+.program-card.bg-02::after,
+.program-card.bg-05::after {
+  background: linear-gradient(135deg, rgba(13,13,13,0.45) 0%, rgba(21,21,21,0.35) 100%);
+}
+.program-card:hover { background: var(--charcoal); border-color: var(--copper); box-shadow: inset -2px 2px 0px var(--copper); }
+.program-card:hover::before { transform: scaleX(1); }
+
+.program-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem;
+  color: var(--steel);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  transition: color 0.3s;
+  font-weight: 900;
+}
+.program-card:hover .program-num { color: var(--copper); }
+
+.program-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.program-desc {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--ash);
+  margin-bottom: 2rem;
+}
+
+.program-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--smoke);
+}
+
+.stats-bar {
+  background: var(--charcoal);
+  border-top: 4px solid var(--steel);
+  border-bottom: 4px solid var(--steel);
+  padding: 3rem 4rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  text-align: center;
+  box-shadow: inset 0 0 20px rgba(74,124,158,0.1);
+}
+
+.stat-item .big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem;
+  color: var(--white);
+  line-height: 1;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.stat-item .big span { color: var(--copper); }
+
+.stat-item .small {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin-top: 0.5rem;
+}
+
+.trainers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.trainer-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--charcoal);
+  border: 3px solid var(--steel);
+  box-shadow: -4px 4px 0px var(--iron);
+}
+
+.trainer-avatar {
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-bg {
+  width: 100%; height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+.trainer-initials {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 6rem;
+  color: rgba(255,255,255,0.08);
+  position: absolute;
+  z-index: 1;
+}
+
+.trainer-info {
+  padding: 1.5rem;
+  border-top: 1px solid var(--iron);
+}
+
+.trainer-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.trainer-role {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-top: 0.25rem;
+  font-weight: 700;
+}
+
+.trainer-spec {
+  font-size: 0.8rem;
+  color: var(--ash);
+  margin-top: 0.75rem;
+  font-weight: 300;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  background: var(--iron);
+}
+
+.pricing-card {
+  background: var(--off-black);
+  padding: 3rem 2.5rem;
+  border: 2px solid var(--steel);
+  transition: all 0.3s;
+}
+.pricing-card:hover { border-color: var(--copper); box-shadow: inset -2px 2px 0px var(--copper); }
+
+.pricing-card.featured { background: var(--copper); border: 2px solid var(--fire); box-shadow: -4px 4px 0px var(--fire); }
+
+.plan-name {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin-bottom: 1rem;
+}
+.featured .plan-name { color: rgba(255,255,255,0.7); }
+
+.plan-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4.5rem;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  font-weight: 900;
+}
+
+.plan-period {
+  font-size: 0.75rem;
+  color: var(--ash);
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+.featured .plan-period { color: rgba(255,255,255,0.6); }
+
+.plan-features {
+  list-style: none;
+  margin-bottom: 2.5rem;
+}
+
+.plan-features li {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--ash);
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--iron);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.featured .plan-features li {
+  color: rgba(255,255,255,0.8);
+  border-bottom-color: rgba(255,255,255,0.15);
+}
+
+.plan-features li::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--fire);
+  flex-shrink: 0;
+}
+.featured .plan-features li::before { background: var(--white); }
+
+.quote-section {
+  padding: 8rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.quote-section::before {
+  content: '"';
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 25rem;
+  color: var(--charcoal);
+  position: absolute;
+  top: -4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.quote-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: 0.05em;
+  color: var(--white);
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.quote-attr {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ash);
+  position: relative;
+  z-index: 2;
+}
+
+footer {
+  background: var(--off-black);
+  border-top: 4px solid var(--steel);
+  padding: 4rem 4rem 2rem;
+  box-shadow: inset 0 4px 10px rgba(74,124,158,0.1);
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+}
+
+.footer-brand .logo { font-size: 2rem; margin-bottom: 1rem; display: block; }
+
+.footer-tagline {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--ash);
+  max-width: 280px;
+}
+
+.footer-col h4 {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 1.5rem;
+}
+
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 0.75rem; }
+.footer-col ul a {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--ash);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-col ul a:hover { color: var(--cream); }
+
+.footer-bottom {
+  border-top: 1px solid var(--iron);
+  padding-top: 2rem;
+ display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--smoke);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up { opacity: 0; animation: fadeUp 0.8s ease forwards; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.25s; }
+.delay-3 { animation-delay: 0.4s; }
+.delay-4 { animation-delay: 0.55s; }
+
+@media (max-width: 900px) {
+  nav { padding: 1.2rem 2rem; }
+  nav ul { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 2rem; padding-top: 8rem; }
+  .hero-visual { display: none; }
+  .programs-grid, .trainers-grid, .pricing-grid { grid-template-columns: 1fr; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .section { padding: 5rem 2rem; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+
